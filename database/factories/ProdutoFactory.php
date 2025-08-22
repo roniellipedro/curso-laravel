@@ -26,7 +26,7 @@ class ProdutoFactory extends Factory
             'descricao' => $this->faker->paragraph(),
             'preco' => $this->faker->randomNumber(2),
             'slug' => Str::slug($nome),
-            'imagem' => $this->faker->imageUrl(400, 400),
+            'imagem' => 'https://placehold.co/400x300?text=' . $this->faker->word,
             'id_user' => User::pluck('id')->random(),
             'id_categoria' => Categoria::pluck('id')->random(),
         ];
