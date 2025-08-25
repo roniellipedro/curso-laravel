@@ -10,7 +10,9 @@ class CarrinhoController extends Controller
     public function carrinhoLista()
     {
         $itens = Cart::content();
-        dd($itens);
+        // dd($itens);
+
+        return view('site.carrinho', compact('itens'));
     }
 
     public function adicionaCarrinho(Request $request)
@@ -20,9 +22,11 @@ class CarrinhoController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'qty' => $request->quantity,
-            'attributes' => array(
+            'options' => array(
                 'image' => $request->image
             )
         ]);
+
+        return redirect()->back();
     }
 }
