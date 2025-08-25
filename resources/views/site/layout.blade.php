@@ -25,7 +25,7 @@
             <div class="nav-wrapper container">
                 <a href="#" class="brand-logo center">CursoLaravel</a>
                 <ul id="nav-mobile" class="left">
-                    <li><a href="">Home</a></li>
+                    <li><a href="{{ route('site.index') }}">Home</a></li>
                     <li><a href="" class="dropdown-trigger" data-target='dropdown1'>Categorias <i
                                 class="material-icons right">expand_more</i></a></li>
                     <li><a href="">Carrinho</a></li>
