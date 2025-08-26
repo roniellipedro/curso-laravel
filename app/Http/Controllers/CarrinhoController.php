@@ -43,4 +43,11 @@ class CarrinhoController extends Controller
             'qty' => $request['quantity']
         ]);
     }
+
+    public function limpaCarrinho()
+    {
+        Cart::destroy();
+
+        return redirect()->route('site.carrinho')->with('alerta', 'Seu carrinho está vazio!');
+    }
 }

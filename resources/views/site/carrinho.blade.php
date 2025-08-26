@@ -12,6 +12,14 @@
             </div>
         @endif
 
+        @if (session('alerta'))
+            <div class="card blue">
+                <div class="card-content white-text">
+                    <p>{{ session('alerta') }}</p>
+                </div>
+            </div>
+        @endif
+
         <h5>Seu carrinho possui {{ $itens->count() }} produto(s) </h5>
 
         <table class="striped">
@@ -32,8 +40,9 @@
                         <td>{{ $item->name }}</td>
                         <td>R$ {{ number_format($item->price, 2, ',', '.') }}</td>
 
-                        <td><input type="number" style="width: 50px; font-weight:900;" class="white center refresh-cart-input"
-                                name="quantity" data-id="{{ $item->rowId }}" value="{{ $item->qty }}">
+                        <td><input type="number" style="width: 50px; font-weight:900;"
+                                class="white center refresh-cart-input" name="quantity" data-id="{{ $item->rowId }}"
+                                value="{{ $item->qty }}">
                         </td>
                         <td>
                             <input type="hidden" name="rowId" value="{{ $item->rowId }}">
@@ -53,12 +62,11 @@
         </table>
 
         <div class="row container center">
-            <button class="btn waves-effect waves-light blue">Continuar comprando<i
-                    class="material-icons right">arrow_back</i></button>
-            <button class="btn waves-effect waves-light blue">Limpar carrinho<i
-                    class="material-icons right">clear</i></button>
-            <button class="btn waves-effect waves-light green">Finalizar pedido<i
-                    class="material-icons right">check</i></button>
+            <a class="btn waves-effect waves-light blue">Continuar comprando<i
+                    class="material-icons right">arrow_back</i></a>
+            <a href="{{ route('site.limpacarrinho') }}" class="btn waves-effect waves-light blue">Limpar carrinho<i
+                    class="material-icons right">clear</i></a>
+            <a class="btn waves-effect waves-light green">Finalizar pedido<i class="material-icons right">check</i></a>
         </div>
     </div>
 
