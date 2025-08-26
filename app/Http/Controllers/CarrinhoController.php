@@ -9,6 +9,7 @@ class CarrinhoController extends Controller
 {
     public function carrinhoLista()
     {
+        // Cart::destroy();
         $itens = Cart::content();
 
         return view('site.carrinho', compact('itens'));
@@ -34,5 +35,12 @@ class CarrinhoController extends Controller
         Cart::remove($request->rowId);
 
         return redirect()->route('site.carrinho')->with('sucesso', 'Produto removido do carrinho com sucesso!');
+    }
+
+    public function atualizaCarrinho(Request $request)
+    {
+        Cart::update($request['rowId'], [
+            'qty' => $request['quantity']
+        ]);
     }
 }

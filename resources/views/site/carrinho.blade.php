@@ -12,8 +12,6 @@
             </div>
         @endif
 
-
-
         <h5>Seu carrinho possui {{ $itens->count() }} produto(s) </h5>
 
         <table class="striped">
@@ -33,16 +31,18 @@
                         <td><img src="{{ $item->options->image }}" width="100" class="responsive-img circle"></td>
                         <td>{{ $item->name }}</td>
                         <td>R$ {{ number_format($item->price, 2, ',', '.') }}</td>
-                        <td><input type="number" style="width: 50px; font-weight:900;" class="white center" name="quantity"
-                                value="{{ $item->qty }}"></td>
+
+                        <td><input type="number" style="width: 50px; font-weight:900;" class="white center refresh-cart-input"
+                                name="quantity" data-id="{{ $item->rowId }}" value="{{ $item->qty }}">
+                        </td>
                         <td>
-                            <button class="btn-floating btn-large waves-effect waves-light orange"><i
-                                    class="material-icons">refresh</i></button>
+                            <input type="hidden" name="rowId" value="{{ $item->rowId }}">
+
                             <form action="{{ route('site.removecarrinho') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="rowId" value="{{ $item->rowId }}">
                                 <button class="btn-floating btn-large waves-effect waves-light red"><i
                                         class="material-icons">delete</i></button>
-                                <input type="hidden" name="rowId" value="{{ $item->rowId }}">
                             </form>
 
                         </td>
@@ -61,4 +61,26 @@
                     class="material-icons right">check</i></button>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.refresh-cart-input').forEach(input => {
+            input.addEventListener('change', function() {
+
+                const formData = new FormData();
+                formData.append('quantity', this.value);
+                formData.append('rowId', this.dataset.id);
+
+                fetch('/carrinho/atualizar', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log('Atualizado com sucesso!', data))
+                    .catch(err => console.error('Erro ao atualizar:', err));
+            });
+        });
+    </script>
 @endsection
