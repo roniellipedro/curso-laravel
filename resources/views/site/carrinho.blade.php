@@ -4,6 +4,16 @@
 
 @section('conteudo')
     <div class="row container">
+        @if (session('sucesso'))
+            <div class="card green">
+                <div class="card-content white-text">
+                    <p>{{ session('sucesso') }}</p>
+                </div>
+            </div>
+        @endif
+
+
+
         <h5>Seu carrinho possui {{ $itens->count() }} produto(s) </h5>
 
         <table class="striped">
@@ -41,8 +51,10 @@
         <div class="row container center">
             <button class="btn waves-effect waves-light blue">Continuar comprando<i
                     class="material-icons right">arrow_back</i></button>
-            <button class="btn waves-effect waves-light blue">Limpar carrinho<i class="material-icons right">clear</i></button>
-            <button class="btn waves-effect waves-light green">Finalizar pedido<i class="material-icons right">check</i></button>
+            <button class="btn waves-effect waves-light blue">Limpar carrinho<i
+                    class="material-icons right">clear</i></button>
+            <button class="btn waves-effect waves-light green">Finalizar pedido<i
+                    class="material-icons right">check</i></button>
         </div>
     </div>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Categoria;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $categoriasMenu = Categoria::all();
 
-        view()->share('categoriasMenu', $categoriasMenu);
+        view()->share(['categoriasMenu' => $categoriasMenu]);
     }
 }

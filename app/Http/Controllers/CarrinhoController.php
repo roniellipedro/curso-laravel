@@ -10,7 +10,6 @@ class CarrinhoController extends Controller
     public function carrinhoLista()
     {
         $itens = Cart::content();
-        // dd($itens);
 
         return view('site.carrinho', compact('itens'));
     }
@@ -27,6 +26,6 @@ class CarrinhoController extends Controller
             )
         ]);
 
-        return redirect()->back();
+        return redirect()->route('site.carrinho')->with('sucesso', 'Produto adicionado ao carrinho com sucesso!');
     }
 }

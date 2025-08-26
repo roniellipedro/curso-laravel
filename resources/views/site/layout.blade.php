@@ -20,20 +20,21 @@
         @endforeach
     </ul>
 
-    <nav>
-        <div class="red">
+    <nav class="red darken-4">
+        <div>
             <div class="nav-wrapper container">
                 <a href="#" class="brand-logo center">CursoLaravel</a>
                 <ul id="nav-mobile" class="left">
                     <li><a href="{{ route('site.index') }}">Home</a></li>
                     <li><a href="" class="dropdown-trigger" data-target='dropdown1'>Categorias <i
                                 class="material-icons right">expand_more</i></a></li>
-                    <li><a href="{{ route('site.carrinho') }}">Carrinho</a></li>
+                    <li><a href="{{ route('site.carrinho') }}">Carrinho
+                            <span class="new badge red" data-badge-caption="">{{ Cart::content()->count() }}</span>
+                        </a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
     @yield('conteudo')
 
     <!-- Compiled and minified JavaScript -->
