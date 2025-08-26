@@ -38,8 +38,12 @@
                         <td>
                             <button class="btn-floating btn-large waves-effect waves-light orange"><i
                                     class="material-icons">refresh</i></button>
-                            <button class="btn-floating btn-large waves-effect waves-light red"><i
-                                    class="material-icons">delete</i></button>
+                            <form action="{{ route('site.removecarrinho') }}" method="POST">
+                                @csrf
+                                <button class="btn-floating btn-large waves-effect waves-light red"><i
+                                        class="material-icons">delete</i></button>
+                                <input type="hidden" name="rowId" value="{{ $item->rowId }}">
+                            </form>
 
                         </td>
                     </tr>
