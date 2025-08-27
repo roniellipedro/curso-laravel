@@ -7,12 +7,18 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function index()
+    {
+        return view('login.form');
+    }
     public function auth(Request $request)
     {
-        $credenciais = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required']
-        ]);
+        $credenciais = $request->validate(
+            [
+                'email' => ['required', 'email'],
+                'password' => ['required']
+            ]
+        );
 
         if (Auth::attempt($credenciais)) {
             $request->session()->regenerate();
