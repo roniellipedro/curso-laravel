@@ -20,54 +20,75 @@
             </div>
         @endif
 
-        <h5>Seu carrinho possui {{ $itens->count() }} produto(s) </h5>
+        @if ($itens->count() == 0)
+            <div class="card orange">
+                <div class="card-content white-text">
+                    <h5>Seu carrinho está vazio!</h5>
+                    <span>Clique
+                        <a style="color: blue;" href="{{ route('site.index') }}">aqui</a>
+                        e aproveite nossas promoções!</span>
 
-        <table class="striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Nome</th>
-                    <th>Preço</th>
-                    <th>Quantidade</th>
-                    <th></th>
-                </tr>
-            </thead>
+                </div>
+            </div>
+        @else
+            <h5>Seu carrinho possui {{ $itens->count() }} produto(s) </h5>
 
-            <tbody>
-                @foreach ($itens as $item)
+            <table class="striped">
+                <thead>
                     <tr>
-                        <td><img src="{{ $item->options->image }}" width="100" class="responsive-img circle"></td>
-                        <td>{{ $item->name }}</td>
-                        <td>R$ {{ number_format($item->price, 2, ',', '.') }}</td>
-
-                        <td><input type="number" style="width: 50px; font-weight:900;"
-                                class="white center refresh-cart-input" name="quantity" data-id="{{ $item->rowId }}"
-                                value="{{ $item->qty }}">
-                        </td>
-                        <td>
-                            <input type="hidden" name="rowId" value="{{ $item->rowId }}">
-
-                            <form action="{{ route('site.removecarrinho') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="rowId" value="{{ $item->rowId }}">
-                                <button class="btn-floating btn-large waves-effect waves-light red"><i
-                                        class="material-icons">delete</i></button>
-                            </form>
-
-                        </td>
+                        <th></th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th></th>
                     </tr>
-                @endforeach
+                </thead>
 
-            </tbody>
-        </table>
+                <tbody>
+                    @foreach ($itens as $item)
+                        <tr>
+                            <td><img src="{{ $item->options->image }}" width="100" class="responsive-img circle"></td>
+                            <td>{{ $item->name }}</td>
+                            <td>R$ {{ number_format($item->price, 2, ',', '.') }}</td>
 
-        <div class="row container center">
-            <a class="btn waves-effect waves-light blue">Continuar comprando<i
-                    class="material-icons right">arrow_back</i></a>
-            <a href="{{ route('site.limpacarrinho') }}" class="btn waves-effect waves-light blue">Limpar carrinho<i
-                    class="material-icons right">clear</i></a>
-            <a class="btn waves-effect waves-light green">Finalizar pedido<i class="material-icons right">check</i></a>
-        </div>
+                            <td><input type="number" style="width: 50px; font-weight:900;"
+                                    class="white center refresh-cart-input" name="quantity" data-id="{{ $item->rowId }}"
+                                    value="{{ $item->qty }}">
+                            </td>
+                            <td>
+                                <input type="hidden" name="rowId" value="{{ $item->rowId }}">
+
+                                <form action="{{ route('site.removecarrinho') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="rowId" value="{{ $item->rowId }}">
+                                    <button class="btn-floating btn-large waves-effect waves-light red"><i
+                                            class="material-icons">delete</i></button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="card orange">
+                <div class="card-content black-text">
+                    <h6>
+                        <strong>
+                            Total: R$ {{ Cart::subtotal(2,',','.') }}
+                        </strong>
+                    </h6>
+                </div>
+            </div>
+
+
+            <div class="row container center">
+                <a href="{{ route('site.index') }}"class="btn waves-effect waves-light blue">Continuar comprando<i
+                        class="material-icons right">arrow_back</i></a>
+                <a href="{{ route('site.limpacarrinho') }}" class="btn waves-effect waves-light blue">Limpar carrinho<i
+                        class="material-icons right">clear</i></a>
+                <a class="btn waves-effect waves-light green">Finalizar pedido<i class="material-icons right">check</i></a>
+            </div>
+        @endif
     </div>
 
     <script>
@@ -86,7 +107,11 @@
                         body: formData
                     })
                     .then(response => response.json())
-                    .then(data => console.log('Atualizado com sucesso!', data))
+                    .then(data => {
+                        console.log('Atualizado com sucesso!', data)
+
+                        window.location.reload();
+                    })
                     .catch(err => console.error('Erro ao atualizar:', err));
             });
         });

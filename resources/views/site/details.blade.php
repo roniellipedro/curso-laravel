@@ -4,6 +4,14 @@
 
 @section('conteudo')
     <div class="row container">
+        @if (session('alerta'))
+            <div class="card blue">
+                <div class="card-content white-text">
+                    <p>{{ session('alerta') }}</p>
+                </div>
+            </div>
+        @endif
+
         <div class="col s12 m6">
             <img src="{{ $produto->imagem }}" class="responsive-img">
         </div>
@@ -20,7 +28,7 @@
                 <input type="hidden" name="id" value="{{ $produto->id }}">
                 <input type="hidden" name="name" value="{{ $produto->nome }}">
                 <input type="hidden" name="price" value="{{ $produto->preco }}">
-                <input type="number" name="quantity" value="1">
+                <input type="number" name="quantity" value="1" min="1">
                 <input type="hidden" name="image" value="{{ $produto->imagem }}">
                 <button class="btn orange btn-large">Comprar</button>
             </form>

@@ -9,7 +9,6 @@ class CarrinhoController extends Controller
 {
     public function carrinhoLista()
     {
-        // Cart::destroy();
         $itens = Cart::content();
 
         return view('site.carrinho', compact('itens'));
@@ -17,11 +16,15 @@ class CarrinhoController extends Controller
 
     public function adicionaCarrinho(Request $request)
     {
+        if ($request->quantity == null) {
+            return redirect()->back()->with('alerta', 'A quantidade deve ser maior ou igual a 1');
+        }
+
         Cart::add([
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
-            'qty' => $request->quantity,
+            'qty' => abs($request->quantity),
             'options' => array(
                 'image' => $request->image
             )
@@ -40,7 +43,12 @@ class CarrinhoController extends Controller
     public function atualizaCarrinho(Request $request)
     {
         Cart::update($request['rowId'], [
-            'qty' => $request['quantity']
+            'qty' => abs($request['quantity'])
+        ]);
+
+        return response()->json([
+            'status' => 'ok',
+            'mensagem' => 'Carrinho atualizado'
         ]);
     }
 
