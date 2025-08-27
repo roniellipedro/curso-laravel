@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\SiteController;
@@ -22,3 +23,5 @@ Route::get('/carrinho/limpar', [CarrinhoController::class, 'limpaCarrinho'])->na
 
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
+
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
