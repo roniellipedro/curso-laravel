@@ -72,11 +72,7 @@
             </table>
             <div class="card orange">
                 <div class="card-content black-text">
-                    <h6>
-                        <strong>
-                            Total: R$ {{ Cart::subtotal(2,',','.') }}
-                        </strong>
-                    </h6>
+                    <h5>Total: R$ {{ Cart::subtotal(2, ',', '.') }}</h5>
                 </div>
             </div>
 
