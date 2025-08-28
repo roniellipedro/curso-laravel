@@ -5,10 +5,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [SiteController::class, 'index'])->name('site.index');
+
+Route::resource('/user', UserController::class);
 
 Route::get('/produtos', [ProdutoController::class, 'index'])->name('produto.index');
 Route::get('/produto/{slug}', [ProdutoController::class, 'details'])->name('produto.details');
@@ -22,6 +25,7 @@ Route::post('/carrinho/atualizar', [CarrinhoController::class, 'atualizaCarrinho
 Route::get('/carrinho/limpar', [CarrinhoController::class, 'limpaCarrinho'])->name('site.limpacarrinho');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::get('/register', [LoginController::class, 'create'])->name('login.register');
 Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
 Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
