@@ -15,5 +15,7 @@
     <input name="email" id="email" type="email"><br>
     <label for="password">Password</label><br>
     <input name="password" id="password" type="password"><br>
+    <input type="checkbox" name="remember" id="remember">
+    <label for="remember">Lembrar-me</label><br>
     <input type="submit" value="Entrar">
 </form>
