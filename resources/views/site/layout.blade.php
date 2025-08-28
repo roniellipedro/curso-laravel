@@ -14,16 +14,32 @@
 
 <body>
 
+
     <ul id='dropdown1' class='dropdown-content'>
         @foreach ($categoriasMenu as $categoria)
             <li><a href="{{ route('site.categoria', $categoria->id) }}">{{ $categoria->nome }}</a></li>
         @endforeach
     </ul>
 
+    @auth
+        <ul id='dropdown2' class='dropdown-content'>
+            <li><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
+            <li>
+                <form action="{{ route('login.logout') }}" method="POST">
+                    @csrf
+                    <input type="submit" value="Sair"
+                        style="width:100%; height:50px;background:none;border:none;color:#26a69a;cursor:pointer;">
+
+                </form>
+            </li>
+        </ul>
+    @endauth
+
     <nav class="red darken-4">
         <div>
             <div class="nav-wrapper container">
                 <a href="#" class="brand-logo center">CursoLaravel</a>
+
                 <ul id="nav-mobile" class="left">
                     <li><a href="{{ route('site.index') }}">Home</a></li>
                     <li><a href="" class="dropdown-trigger" data-target='dropdown1'>Categorias <i
@@ -32,6 +48,19 @@
                             <span class="new badge red" data-badge-caption="">{{ Cart::content()->count() }}</span>
                         </a></li>
                 </ul>
+
+                @guest
+                    <ul id="nav-mobile" class="right">
+                        <li><a href="{{ route('login.index') }}">Login<i class="material-icons right">lock</i></a></li>
+                    </ul>
+                @endguest
+
+                @auth
+                    <ul id="nav-mobile" class="right">
+                        <li><a class="dropdown-trigger" data-target='dropdown2'>Olá
+                                {{ Auth::user()->firstName }} <i class="material-icons right">expand_more</i></a></li>
+                    </ul>
+                @endauth
             </div>
         </div>
     </nav>

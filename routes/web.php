@@ -23,5 +23,6 @@ Route::get('/carrinho/limpar', [CarrinhoController::class, 'limpaCarrinho'])->na
 
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
+Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
