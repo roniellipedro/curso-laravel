@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produto;
+use App\Policies\ProdutoPolicy;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -23,11 +25,9 @@ class ProdutoController extends Controller
     {
         $produto = Produto::where('slug', $slug)->firstOrFail();
 
-        if ($produto->id_user !== Auth::id()) {
-            abort(403);
-        } else {
-            return view('site.details', compact('produto'));
-        }
+        Gate::authorize('verProduto', $produto);
+
+        return view('site.details', compact('produto'));
     }
 
     /**
