@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produto;
+use App\Models\User;
 use App\Policies\ProdutoPolicy;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rules\Can;
 
 class ProdutoController extends Controller
 {
@@ -25,7 +27,15 @@ class ProdutoController extends Controller
     {
         $produto = Produto::where('slug', $slug)->firstOrFail();
 
-        Gate::authorize('verProduto', $produto);
+        // Gate::authorize('verProduto', $produto);
+
+        if (Gate::allows('verProduto', $produto)) {
+            return view('site.details', compact('produto'));
+        }
+
+        if (Gate::denies('verProduto', $produto)) {
+            return redirect(route('site.index'));
+        }
 
         return view('site.details', compact('produto'));
     }
