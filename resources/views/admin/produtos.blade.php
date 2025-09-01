@@ -4,45 +4,22 @@
 
 @section('conteudo')
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large bg-gradient-green modal-trigger" href="#modal1">
+        <a class="btn-floating btn-large bg-gradient-green modal-trigger" href="#create">
             <i class="large material-icons">add</i>
         </a>
     </div>
 
-    <!-- Modal Structure -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <h4><i class="material-icons">card_giftcard</i> Novo produto</h4>
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-                        <label for="first_name">First Name</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="last_name" type="text" class="validate">
-                        <label for="last_name">Last Name</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                        <select>
-                            <option value="" disabled selected>Choose your option</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
-                        </select>
-                        <label>Materialize Select</label>
-                    </div>
-
-                </div>
-
-                <a href="#!" class="modal-close waves-effect waves-green btn blue right">Cadastrar</a><br>
-        </div>
-
-        </form>
-    </div>
+    @include('admin.modals.create')
 
     <div class="row container crud">
+
+        @if (session('sucesso'))
+            <div class="card green">
+                <div class="card-content white-text">
+                    <p>{{ session('sucesso') }}</p>
+                </div>
+            </div>
+        @endif
 
         <div class="row titulo ">
             <h1 class="left">Produtos</h1>
@@ -84,9 +61,10 @@
                             <td>{{ $produto->categoria->nome }}</td>
                             <td><a class="btn-floating  waves-effect waves-light orange"><i
                                         class="material-icons">mode_edit</i></a>
-                                <a class="btn-floating  waves-effect waves-light red"><i
-                                        class="material-icons">delete</i></a>
+                                <a class="btn-floating waves-effect waves-light red modal-trigger"
+                                    href="#delete-{{ $produto->id }}"><i class="material-icons">delete</i></a>
                             </td>
+                            @include('admin.modals.delete')
                         </tr>
                     @endforeach
                 </tbody>

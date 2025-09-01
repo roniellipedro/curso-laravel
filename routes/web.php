@@ -35,4 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('checkemail');
 
     Route::get('/admin/produtos', [ProdutoAdminController::class, 'index'])->name('admin.produtos');
+
+    Route::delete('/admin/produto/delete/{id}', [ProdutoAdminController::class, 'destroy'])->name('admin.produto.delete');
 });
