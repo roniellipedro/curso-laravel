@@ -31,5 +31,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout')
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('checkemail');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('checkemail');
+
+    Route::get('/admin/produtos', function () {
+        return view('admin.produtos');
+    })->name('admin.produtos');
 });

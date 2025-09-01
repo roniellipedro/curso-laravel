@@ -31,11 +31,11 @@ class DashboardController extends Controller
         $userAno = implode(',', $ano);
         $userTotal = implode(',', $total);
 
-        $categoriaData = Categoria::all();
+        $categoriaData = Categoria::with('produtos')->get();
 
         foreach ($categoriaData as $cat) {
             $catNome[] = "'" . $cat->nome . "'";
-            $catTotal[] = Produto::where('id_categoria', $cat->id)->count();
+            $catTotal[] = $cat->produtos->count();
         }
 
         $catLabel = implode(',', $catNome);

@@ -13,8 +13,6 @@
 </head>
 
 <body>
-
-
     <ul id='dropdown1' class='dropdown-content'>
         @foreach ($categoriasMenu as $categoria)
             <li><a href="{{ route('site.categoria', $categoria->id) }}">{{ $categoria->nome }}</a></li>
@@ -23,7 +21,7 @@
 
     @auth
         <ul id='dropdown2' class='dropdown-content'>
-            <li><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
+            <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             <li>
                 <form action="{{ route('login.logout') }}" method="POST">
                     @csrf

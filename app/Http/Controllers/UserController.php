@@ -34,7 +34,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard.index'));
+        return redirect(route('admin.dashboard'));
     }
 
     /**
