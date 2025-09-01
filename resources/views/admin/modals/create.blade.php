@@ -2,31 +2,64 @@
 <div id="create" class="modal">
     <div class="modal-content">
         <h4><i class="material-icons">card_giftcard</i> Novo produto</h4>
-        <form class="col s12">
+        <form class="col s12" action="{{ route('admin.produto.create') }}" method="POST">
+            @csrf
             <div class="row">
                 <div class="input-field col s6">
-                    <input id="first_name" type="text" class="validate">
-                    <label for="first_name">First Name</label>
+                    <input id="nome" name="nome" type="text" class="validate">
+                    <label for="nome">Nome</label>
                 </div>
                 <div class="input-field col s6">
-                    <input id="last_name" type="text" class="validate">
-                    <label for="last_name">Last Name</label>
+                    <input id="preco" name="preco" type="text" class="validate">
+                    <label for="preco">Preço</label>
                 </div>
 
                 <div class="input-field col s12">
-                    <select>
-                        <option value="" disabled selected>Choose your option</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                    </select>
-                    <label>Materialize Select</label>
+                    <textarea id="descricao" name="descricao" class="materialize-textarea"></textarea>
+                    <label for="descricao">Descrição</label>
                 </div>
 
+                <div class="input-field col s12">
+                    <select id="id_categoria" name="id_categoria">
+                        <option value="" disabled selected>Selecione a categoria</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+                        @endforeach
+                    </select>
+                    <label for="categoria">Categoria</label>
+                </div>
             </div>
 
-            <a href="#!" class="modal-close waves-effect waves-green btn blue right">Cadastrar</a><br>
+            <div class="file-field input-field col s12">
+                <div class="btn">
+                    <span>Imagem</span>
+                    <input name="imagem" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+        </form>
+
+        <button type="submit" class="modal-close waves-effect waves-green btn blue right">Cadastrar</button><br>
     </div>
 
     </form>
 </div>
+
+<script src="https://unpkg.com/imask"></script>
+<script>
+    var element = document.getElementById('preco');
+
+    var maskOptions = {
+        mask: Number,
+        scale: 2,
+        signed: false,
+        thousandsSeparator: '.',
+        padFractionalZeros: true,
+        normalizeZeros: true,
+        radix: ',',
+    };
+
+    var mask = IMask(element, maskOptions);
+</script>

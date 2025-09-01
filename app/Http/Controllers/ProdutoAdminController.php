@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProdutoAdminController extends Controller
 {
@@ -14,15 +17,32 @@ class ProdutoAdminController extends Controller
     {
         $produtos = Produto::paginate(4);
 
-        return view('admin.produtos', compact('produtos'));
+        $categorias = Categoria::all();
+
+        return view('admin.produtos', compact('produtos', 'categorias'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request['preco'] = intval(str_replace([',', '.'], ['', ''], $request['preco']));
+        $request['id_user'] = Auth::user()->id;
+        $request['slug'] = Str::slug($request['nome']);
+        $originalSlug = $request['slug'];
+        $i = 1;
+
+        while (Produto::where('slug', $request['slug'])->exists()) {
+            $request['slug'] = $originalSlug . '-' . $i;
+            $i++;
+        }
+
+        $produto = $request->only('nome', 'descricao', 'preco', 'slug', 'id_user', 'id_categoria');
+        dd($produto);
+        Produto::create($produto);
+
+        return redirect()->route('admin.produtos')->with('sucesso', 'Produto criado com sucesso!');
     }
 
     /**

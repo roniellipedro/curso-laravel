@@ -11,6 +11,15 @@ class Produto extends Model
 
     protected $table = 'produtos';
 
+    protected $fillable = [
+        'nome',
+        'descricao',
+        'preco',
+        'slug',
+        'id_user',
+        'id_categoria',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');

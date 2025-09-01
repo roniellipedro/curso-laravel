@@ -36,5 +36,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/produtos', [ProdutoAdminController::class, 'index'])->name('admin.produtos');
 
+    Route::post('/admin/produto/create', [ProdutoAdminController::class, 'create'])->name('admin.produto.create');
+
     Route::delete('/admin/produto/delete/{id}', [ProdutoAdminController::class, 'destroy'])->name('admin.produto.delete');
 });
