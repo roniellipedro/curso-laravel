@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProdutoAdminController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -33,7 +34,5 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout')
 Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('checkemail');
 
-    Route::get('/admin/produtos', function () {
-        return view('admin.produtos');
-    })->name('admin.produtos');
+    Route::get('/admin/produtos', [ProdutoAdminController::class, 'index'])->name('admin.produtos');
 });

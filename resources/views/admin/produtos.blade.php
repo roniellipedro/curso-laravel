@@ -46,7 +46,7 @@
 
         <div class="row titulo ">
             <h1 class="left">Produtos</h1>
-            <span class="right chip">234 produtos cadastrados</span>
+            <span class="right chip">{{ $produtos->total() }} produtos cadastrados</span>
         </div>
 
         <nav class="bg-gradient-blue">
@@ -68,7 +68,6 @@
                         <th></th>
                         <th>ID</th>
                         <th>Produto</th>
-
                         <th>Preço</th>
                         <th>Categoria</th>
                         <th></th>
@@ -76,62 +75,26 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td><img src="/assets/img/mouse.jpg" class="circle "></td>
-                        <td>#123</td>
-                        <td>Mouse USB</td>
-                        <td>R$ 7.00</td>
-                        <td>Eletrônicos</td>
-                        <td><a class="btn-floating  waves-effect waves-light orange"><i
-                                    class="material-icons">mode_edit</i></a>
-                            <a class="btn-floating  waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="/assets/img/mouse.jpg" class="circle"></td>
-                        <td>#123</td>
-                        <td>Mouse USB</td>
-                        <td>R$ 7.00</td>
-                        <td>Eletrônicos</td>
-                        <td><a class="btn-floating  waves-effect waves-light orange"><i
-                                    class="material-icons">mode_edit</i></a>
-                            <a class="btn-floating  waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="/assets/img/mouse.jpg" class="circle"></td>
-                        <td>#123</td>
-                        <td>Mouse USB</td>
-                        <td>R$ 7.00</td>
-                        <td>Eletrônicos</td>
-                        <td><a class="btn-floating  waves-effect waves-light orange"><i
-                                    class="material-icons">mode_edit</i></a>
-                            <a class="btn-floating  waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="/assets/img/mouse.jpg" class="circle"></td>
-                        <td>#123</td>
-                        <td>Mouse USB</td>
-                        <td>R$ 7.00</td>
-                        <td>Eletrônicos</td>
-                        <td><a class="btn-floating  waves-effect waves-light orange"><i
-                                    class="material-icons">mode_edit</i></a>
-                            <a class="btn-floating  waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>
+                    @foreach ($produtos as $produto)
+                        <tr>
+                            <td><img src="{{ $produto->imagem }}" class="circle "></td>
+                            <td>#{{ $produto->id }}</td>
+                            <td>{{ $produto->nome }}</td>
+                            <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
+                            <td>{{ $produto->categoria->nome }}</td>
+                            <td><a class="btn-floating  waves-effect waves-light orange"><i
+                                        class="material-icons">mode_edit</i></a>
+                                <a class="btn-floating  waves-effect waves-light red"><i
+                                        class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
 
-        <ul class="pagination center">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!">2</a></li>
-            <li class="waves-effect"><a href="#!">3</a></li>
-            <li class="waves-effect"><a href="#!">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-        </ul>
+        <div class="row center">
+            {{ $produtos->links('custom.pagination') }}
+        </div>
     </div>
 @endsection
