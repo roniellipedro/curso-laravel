@@ -8,7 +8,8 @@
             <div class="col s12 m4">
                 <div class="card">
                     <div class="card-image">
-                        <img src="{{ $produto->imagem }}">
+                        <img src="{{ $produto->imagem ? url("storage/$produto->imagem") : 'https://placehold.co/400x400?text=Sem+foto' }}"
+                            style="object-fit:cover; height:200px;">
                         {{-- @can('verProduto', $produto) --}}
                         <a href="{{ route('produto.details', $produto->slug) }}"
                             class="btn-floating halfway-fab waves-effect waves-light red"><i

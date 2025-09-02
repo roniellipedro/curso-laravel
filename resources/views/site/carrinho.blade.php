@@ -27,7 +27,6 @@
                     <span>Clique
                         <a style="color: blue;" href="{{ route('site.index') }}">aqui</a>
                         e aproveite nossas promoções!</span>
-
                 </div>
             </div>
         @else
@@ -47,7 +46,12 @@
                 <tbody>
                     @foreach ($itens as $item)
                         <tr>
-                            <td><img src="{{ $item->options->image }}" width="100" class="responsive-img circle"></td>
+                            @php
+                                $imagem = $item->options->image;
+                            @endphp
+                            <td><img src="{{ $imagem ? url("storage/$imagem") : 'https://placehold.co/400x400?text=Sem+foto' }}"
+                                    style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;"
+                                    class="responsive-img "></td>
                             <td>{{ $item->name }}</td>
                             <td>R$ {{ number_format($item->price, 2, ',', '.') }}</td>
 

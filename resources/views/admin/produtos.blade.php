@@ -54,7 +54,8 @@
                 <tbody>
                     @foreach ($produtos as $produto)
                         <tr>
-                            <td><img src="{{ $produto->imagem }}" class="circle "></td>
+                            <td><img src="{{ $produto->imagem ? url("storage/$produto->imagem") : 'https://placehold.co/400x400?text=Sem+foto' }}"
+                                    style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;"></td>
                             <td>#{{ $produto->id }}</td>
                             <td>{{ $produto->nome }}</td>
                             <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>

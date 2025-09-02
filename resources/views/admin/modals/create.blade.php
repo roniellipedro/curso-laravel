@@ -2,7 +2,7 @@
 <div id="create" class="modal">
     <div class="modal-content">
         <h4><i class="material-icons">card_giftcard</i> Novo produto</h4>
-        <form class="col s12" action="{{ route('admin.produto.create') }}" method="POST">
+        <form class="col s12" action="{{ route('admin.produto.create') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="input-field col s6">
@@ -26,7 +26,7 @@
                             <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
                         @endforeach
                     </select>
-                    <label for="categoria">Categoria</label>
+                    <label for="id_categoria">Categoria</label>
                 </div>
             </div>
 
@@ -39,12 +39,11 @@
                     <input class="file-path validate" type="text">
                 </div>
             </div>
-        </form>
 
-        <button type="submit" class="modal-close waves-effect waves-green btn blue right">Cadastrar</button><br>
+            <button type="submit" class="waves-effect waves-green btn blue right">Cadastrar</button><br>
+        </form>
     </div>
 
-    </form>
 </div>
 
 <script src="https://unpkg.com/imask"></script>

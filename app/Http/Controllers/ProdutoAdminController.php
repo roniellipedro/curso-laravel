@@ -27,19 +27,26 @@ class ProdutoAdminController extends Controller
      */
     public function create(Request $request)
     {
-        $request['preco'] = intval(str_replace([',', '.'], ['', ''], $request['preco']));
-        $request['id_user'] = Auth::user()->id;
-        $request['slug'] = Str::slug($request['nome']);
-        $originalSlug = $request['slug'];
+        $produto = $request->only('nome', 'descricao', 'preco', 'slug', 'imagem', 'id_user', 'id_categoria');
+
+        $produto['preco'] = intval(str_replace([',', '.'], ['', ''], $produto['preco']));
+        $produto['id_user'] = Auth::user()->id;
+        $produto['slug'] = Str::slug($produto['nome']);
+        $originalSlug = $produto['slug'];
         $i = 1;
 
-        while (Produto::where('slug', $request['slug'])->exists()) {
-            $request['slug'] = $originalSlug . '-' . $i;
+        while (Produto::where('slug', $produto['slug'])->exists()) {
+            $produto['slug'] = $originalSlug . '-' . $i;
             $i++;
         }
 
-        $produto = $request->only('nome', 'descricao', 'preco', 'slug', 'id_user', 'id_categoria');
-        dd($produto);
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            $imagemPath = $request->file('imagem')->store('produtos', 'public');
+            $produto['imagem'] = $imagemPath;
+        } else {
+            return back()->withErrors('Erro ao enviar a imagem.');
+        }
+
         Produto::create($produto);
 
         return redirect()->route('admin.produtos')->with('sucesso', 'Produto criado com sucesso!');

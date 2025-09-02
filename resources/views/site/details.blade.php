@@ -13,7 +13,8 @@
         @endif
 
         <div class="col s12 m6">
-            <img src="{{ $produto->imagem }}" class="responsive-img">
+            <img src="{{ $produto->imagem ? url("storage/$produto->imagem") : 'https://placehold.co/400x400?text=Sem+foto' }}"
+                style="object-fit:cover; height:400px;" class="responsive-img">
         </div>
 
         <div class="col s12 m6">
